@@ -1,0 +1,77 @@
+<section class="tasks-page">
+  <div class="page-title">
+    <h2>Mes tâches</h2>
+    <p>Ajoute, modifie et termine tes tâches du quotidien.</p>
+  </div>
+
+  <form class="task-form" (ngSubmit)="addTask()">
+    <label for="new-task">Nouvelle tâche</label>
+
+    <div class="form-row">
+      <input
+        id="new-task"
+        name="newText"
+        type="text"
+        placeholder="Exemple : réviser TypeScript"
+        [(ngModel)]="newText"
+      >
+
+      <button type="submit" [disabled]="newText.trim() === ''">
+        Ajouter
+      </button>
+    </div>
+  </form>
+
+  <div class="task-stats" aria-label="Statistiques des tâches">
+    <p>Total : <strong>{{ totalTasks }}</strong></p>
+    <p>Terminées : <strong>{{ doneTasks }}</strong></p>
+  </div>
+
+  <p class="empty-message" *ngIf="tasks.length === 0">
+    Aucune tâche pour le moment. Ajoute ta première tâche avec le formulaire.
+  </p>
+
+  <ul class="task-list" *ngIf="tasks.length > 0">
+    <li class="task-item" *ngFor="let task of tasks" [class.task-done]="task.done">
+      <div class="task-view" *ngIf="editId !== task.id">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="task.done"
+            (change)="toggleTask(task)"
+          >
+
+          <span [class.done-text]="task.done">
+            {{ task.text }}
+          </span>
+        </label>
+
+        <div class="task-actions">
+          <button type="button" class="secondary-button" (click)="startEdit(task)">
+            Modifier
+          </button>
+          <button type="button" class="danger-button" (click)="deleteTask(task.id)">
+            Supprimer
+          </button>
+        </div>
+      </div>
+
+      <div class="task-edit" *ngIf="editId === task.id">
+        <input
+          type="text"
+          aria-label="Modifier la tâche"
+          [(ngModel)]="editText"
+        >
+
+        <div class="task-actions">
+          <button type="button" (click)="saveEdit(task.id)" [disabled]="editText.trim() === ''">
+            Enregistrer
+          </button>
+          <button type="button" class="secondary-button" (click)="cancelEdit()">
+            Annuler
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</section>
