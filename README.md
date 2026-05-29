@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # To-Do List Angular
 
 ## Description
@@ -62,6 +61,4 @@ http://localhost:4200
 - Interface simple et responsive
 
 ---
-=======
-# todo-list-angular
->>>>>>> adbf20e5c9be8df77c59007b5326e598f692fff3
+
